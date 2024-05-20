@@ -3,7 +3,6 @@ using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Dynamic;
 using Blackbird.Applications.Sdk.Common.Files;
 using Newtonsoft.Json;
-using System.Xml.Linq;
 
 namespace Apps.Smartcat.Models.Requests
 {
@@ -20,7 +19,7 @@ namespace Apps.Smartcat.Models.Requests
         public string? TargetSubstitutionMode { get; set; }
         public string? LockMode { get; set; }
         public string? ConfirmMode { get; set; }
-        public List<string> TargetLanguages { get; set; }
+        public List<string>? TargetLanguages { get; set; }
         public bool? EnablePlaceholders { get; set; }
         public bool? EnableOcr { get; set; }
 
@@ -37,7 +36,7 @@ namespace Apps.Smartcat.Models.Requests
                     lockMode = LockMode,
                     confirmMode = ConfirmMode
                 },                
-                targetLanguages = TargetLanguages.Select(t => t).ToArray(),
+                targetLanguages = TargetLanguages?.Select(t => t).ToArray(),
                 enablePlaceholders = EnablePlaceholders,
                 enableOcr = EnableOcr
             }

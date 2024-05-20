@@ -1,7 +1,6 @@
 ﻿using Apps.Smartcat.Constants;
 using Newtonsoft.Json;
 using RestSharp;
-using Smartcat;
 
 namespace Apps.Smartcat.API
 {

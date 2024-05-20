@@ -3,10 +3,7 @@ using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Dynamic;
 using Apps.Smartcat.Actions;
 using Newtonsoft.Json;
-using Apps.Smartcat.Models.Dtos;
-using RestSharp;
 using Blackbird.Applications.Sdk.Common.Invocation;
-using Blackbird.Applications.Sdk.Common.Authentication;
 
 namespace Apps.Smartcat.Models.Requests
 {

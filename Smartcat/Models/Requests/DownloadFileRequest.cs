@@ -1,30 +1,34 @@
 ﻿
+using Apps.Smartcat.DataSourceHandlers.Static;
 using Blackbird.Applications.Sdk.Common;
+using Blackbird.Applications.Sdk.Common.Dictionaries;
+using Newtonsoft.Json;
 
-namespace Apps.Smartcat.Models.Requests
+namespace Apps.Smartcat.Models.Requests;
+
+public class DownloadFileRequest
 {
-    public class DownloadFileRequest
-    {
-        [Display("Document ID")]
-        public string DocumentId { get; set; }
+    [Display("Segment export mode")]
+    [JsonProperty("mode")]
+    [StaticDataSource(typeof(DownloadFileModeDataHandler))]
+    public string? Mode { get; set; }
 
-        [Display("Language ID")]
-        public string LanguageID { get; set; }
+    [Display("Export document request type")]
+    [JsonProperty("type")]
+    [StaticDataSource(typeof(FileTypeDataHandler))]
+    public string? Type { get; set; }
 
-        [Display("Segment export mode")]
-        public string? Mode { get; set; }
+    [Display("Workflow stage number")]
+    [JsonProperty("stageNumber")]
+    public string? StageNumber { get; set; }
 
-        [Display("Export document request type")]
-        public string? Type { get; set; }
+    [Display("Exporting file format")]
+    [JsonProperty("exportingDocumentFormat")]
+    [StaticDataSource(typeof(DocumentExportFormatHandler))]
+    public string? ExportingDocumentFormat { get; set; }
 
-        [Display("Workflow stage number")]
-        public string? stageNumber { get; set; }
+    [Display("Structuring Delimiter")]
+    [JsonProperty("structuringDelimiter")]
+    public string? StructuringDelimiter { get; set; }
 
-        [Display("Exporting file format")]
-        public string? exportingDocumentFormat { get; set; }
-
-        [Display("Structuring Delimiter")]
-        public string? structuringDelimiter { get; set; }
-
-    }
 }

@@ -5,36 +5,35 @@ using Apps.Smartcat.Actions;
 using Newtonsoft.Json;
 using Blackbird.Applications.Sdk.Common.Invocation;
 
-namespace Apps.Smartcat.Models.Requests
+namespace Apps.Smartcat.Models.Requests;
+
+public class UpdateProjectRequest
 {
-    
-    public class UpdateProjectRequest
+
+    [DataSource(typeof(ProjectDataHandler))]
+    [Display("Project ID")]
+    public string ProjectId { get; set; }
+
+    [Display("Project Name")]
+    public string? Name { get; set; }
+
+    public string? Description { get; set; }
+
+    public DateTime? Deadline { get; set; }
+
+    [Display("Client ID")]
+    public string? ClientId { get; set; }
+
+    [Display("External Tag")]
+    public string? ExternalTag { get; set; }
+
+    public string GetSerializedRequest(InvocationContext context)
     {
-
-        [DataSource(typeof(ProjectDataHandler))]
-        [Display("Project ID")]
-        public string ProjectId { get; set; }
-
-        [Display("Project Name")]
-        public string? Name { get; set; }
-
-        public string? Description { get; set; }
-
-        public DateTime? Deadline { get; set; }
-
-        [Display("Client ID")]
-        public string? ClientId { get; set; }
-
-        [Display("External Tag")]
-        public string? ExternalTag { get; set; }
-
-        public string GetSerializedRequest(InvocationContext context)
+        if (Name is null)
         {
-            if (Name is null)
-            {
-                Name = new ProjectActions(context).GetProject(new GetProjectRequest { Project = ProjectId}).Result.name;
-            }
-            return JsonConvert.SerializeObject(new
+            Name = new ProjectActions(context).GetProject(new GetProjectRequest { Project = ProjectId}).Result.name;
+        }
+        return JsonConvert.SerializeObject(new
             {
                 name = Name,
                 description = Description,
@@ -43,7 +42,6 @@ namespace Apps.Smartcat.Models.Requests
                 externalTag = ExternalTag
             }
             , new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
-        }
-
     }
+
 }

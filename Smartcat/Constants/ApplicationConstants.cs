@@ -1,7 +1,6 @@
-﻿namespace Apps.Smartcat.Constants
+﻿namespace Apps.Smartcat.Constants;
+
+public static class Urls
 {
-    public static class Urls
-    {
-        public const string Api = "https://smartcat.ai/api/integration/v1/";
-    }
+    public const string Api = "https://smartcat.ai/api/integration/v1/";
 }

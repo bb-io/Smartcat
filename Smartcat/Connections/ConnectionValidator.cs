@@ -1,6 +1,5 @@
-﻿namespace Smartcat.Connections
+﻿namespace Smartcat.Connections;
+
+internal class ConnectionValidator
 {
-    internal class ConnectionValidator
-    {
-    }
 }

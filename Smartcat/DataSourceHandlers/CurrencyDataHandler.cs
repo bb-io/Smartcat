@@ -2,17 +2,17 @@
 using Blackbird.Applications.Sdk.Common.Invocation;
 using Blackbird.Applications.Sdk.Common;
 
-namespace Apps.Smartcat.DataSourceHandlers
-{
-    public class CurrencyDataHandler : BaseInvocable, IDataSourceHandler
-    {
-        public CurrencyDataHandler(InvocationContext invocationContext) : base(invocationContext)
-        {
-        }
+namespace Apps.Smartcat.DataSourceHandlers;
 
-        public Dictionary<string, string> GetData(DataSourceContext context)
-        {
-            var currency = new List<string>
+public class CurrencyDataHandler : BaseInvocable, IDataSourceHandler
+{
+    public CurrencyDataHandler(InvocationContext invocationContext) : base(invocationContext)
+    {
+    }
+
+    public Dictionary<string, string> GetData(DataSourceContext context)
+    {
+        var currency = new List<string>
         {
             "AED",
             "ARS",
@@ -59,11 +59,10 @@ namespace Apps.Smartcat.DataSourceHandlers
 
         };
 
-            return currency
-                .Where(currency => context.SearchString == null || currency.Contains(context.SearchString,
-                    StringComparison.OrdinalIgnoreCase))
-                .ToDictionary(currency => currency, currency => currency);
-        }
-
+        return currency
+            .Where(currency => context.SearchString == null || currency.Contains(context.SearchString,
+                StringComparison.OrdinalIgnoreCase))
+            .ToDictionary(currency => currency, currency => currency);
     }
+
 }

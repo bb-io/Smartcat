@@ -2,29 +2,27 @@
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace Apps.Smartcat.API
+namespace Apps.Smartcat.API;
+
+public class SmartcatClient : RestClient
 {
-    public class SmartcatClient : RestClient
+    public SmartcatClient() : base(new RestClientOptions { BaseUrl = new(Urls.Api) })
     {
-        public SmartcatClient() : base(new RestClientOptions { BaseUrl = new(Urls.Api) })
-        {
-        }
+    }
 
-        public async Task<T> ExecuteWithHandling<T>(RestRequest request)
-        {
-            var response = await ExecuteWithHandling(request);
+    public async Task<T> ExecuteWithHandling<T>(RestRequest request)
+    {
+        var response = await ExecuteWithHandling(request);
 
-            return JsonConvert.DeserializeObject<T>(response.Content!)!;
-        }
+        return JsonConvert.DeserializeObject<T>(response.Content!)!;
+    }
 
-        public async Task<RestResponse> ExecuteWithHandling(RestRequest request)
-        {
-            var response = await ExecuteAsync(request);
-            if (response.IsSuccessStatusCode)
-                return response;
+    public async Task<RestResponse> ExecuteWithHandling(RestRequest request)
+    {
+        var response = await ExecuteAsync(request);
+        if (response.IsSuccessStatusCode)
+            return response;
 
-            throw new(response.Content);
-        }
+        throw new(response.Content);
     }
 }
-

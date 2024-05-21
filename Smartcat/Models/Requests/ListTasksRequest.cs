@@ -2,14 +2,13 @@
 using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Dynamic;
 
-namespace Apps.Smartcat.Models.Requests
-{
-    public class ListTasksRequest
-    {
-        [Display("Project ID")]
-        public string ProjectID { get; set; }
+namespace Apps.Smartcat.Models.Requests;
 
-        [DataSource(typeof(CurrencyDataHandler))]
-        public string Currency { get; set; }
-    }
+public class ListTasksRequest
+{
+    [Display("Project ID")]
+    public string ProjectID { get; set; }
+
+    [DataSource(typeof(CurrencyDataHandler))]
+    public string Currency { get; set; }
 }

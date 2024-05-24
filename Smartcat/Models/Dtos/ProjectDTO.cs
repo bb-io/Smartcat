@@ -41,7 +41,7 @@ public class ProjectDTO
     public List<string> targetLanguages { get; set; }
 
     [Display("Project Status")]
-    public string status { get; set; }
+    public string Status { get; set; }
 
     [Display("Status Modification Date")]
     public DateTime statusModificationDate { get; set; }

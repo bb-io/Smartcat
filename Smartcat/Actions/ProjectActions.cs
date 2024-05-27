@@ -35,7 +35,7 @@ public class ProjectActions : SmartcatInvocable
     public async Task<ProjectDTO> GetProject([ActionParameter] GetProjectRequest input)
     {
         var request = new SmartcatRequest(Urls.Api + "project/" + input.Project, Method.Get, Creds);
-        return await Client.ExecuteWithHandling<ProjectDTO>(request);            
+        return await Client.ExecuteWithHandling<ProjectDTO>(request);
     }
 
     [Action("Update project", Description = "Update project info")]
@@ -44,17 +44,15 @@ public class ProjectActions : SmartcatInvocable
         var request = new SmartcatRequest(Urls.Api + "project/" + input.ProjectId, Method.Put, Creds);
         request.AddStringBody(input.GetSerializedRequest(InvocationContext), DataFormat.Json);
         await Client.ExecuteWithHandling(request);
-        return await GetProject(new GetProjectRequest {Project = input.ProjectId });
+        return await GetProject(new GetProjectRequest { Project = input.ProjectId });
     }
 
     [Action("Create project", Description = "Create a new project")]
     public async Task<ProjectDTO> CreateProject([ActionParameter] CreateProjectRequest input)
     {
-        var request = new SmartcatRequest(Urls.Api + "project/create" , Method.Post, Creds);
+        var request = new SmartcatRequest(Urls.Api + "project/create", Method.Post, Creds);
         request.AlwaysMultipartFormData = true;
         request.AddParameter("projectModel", input.GetSerializedRequest());
         return await Client.ExecuteWithHandling<ProjectDTO>(request);
     }
-
-       
 }

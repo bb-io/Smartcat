@@ -25,17 +25,20 @@ public class TaskActions : SmartcatInvocable
     [Action("List project tasks", Description = "List all project tasks")]
     public async Task<ListTasksResponse> ListAllTasks([ActionParameter] ListTasksRequest input)
     {
-        var request = new SmartcatRequest(Urls.Api + $"/projectTask/{input.ProjectID}/list?currency={input.Currency}", Method.Get, Creds);
+        var request = new SmartcatRequest(Urls.Api + $"/projectTask/{input.ProjectID}/list?currency={input.Currency}",
+            Method.Get, Creds);
         var response = await Client.ExecuteWithHandling<List<TaskDTO>>(request);
         return new ListTasksResponse { Tasks = response };
-            
     }
 
     [Action("Get task", Description = "Get specific project task")]
-    public async Task<TaskDTO> GetTask([ActionParameter] ListTasksRequest listTasks, [ActionParameter] GetTaskRequest input)
+    public async Task<TaskDTO> GetTask([ActionParameter] ListTasksRequest listTasks,
+        [ActionParameter] GetTaskRequest input)
     {
-        var request = new SmartcatRequest(Urls.Api + $"projectTask/{listTasks.ProjectID}/{input.ProjectTaskID}?currency={listTasks.Currency}", Method.Get, Creds);
+        var request =
+            new SmartcatRequest(
+                Urls.Api + $"projectTask/{listTasks.ProjectID}/{input.ProjectTaskID}?currency={listTasks.Currency}",
+                Method.Get, Creds);
         return await Client.ExecuteWithHandling<TaskDTO>(request);
     }
-
 }

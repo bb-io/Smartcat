@@ -33,7 +33,7 @@ public class WebhookList : SmartcatInvocable
             var request = new SmartcatRequest(Urls.Api + "project/" + projectId, Method.Get, Creds);
             var project = await Client.ExecuteWithHandling<ProjectDTO>(request);
 
-            if(input.Status is null || project.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase))
+            if (input.Status is null || project.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase))
                 result.Add(project);
         }
 
@@ -54,7 +54,7 @@ public class WebhookList : SmartcatInvocable
             ReceivedWebhookRequestType = WebhookRequestType.Default,
         };
     }
-    
+
     [Webhook("On document status changed", typeof(DocumentStatusChangedHandler),
         Description = "Triggered when status of the specific document changed")]
     public async Task<WebhookResponse<ListDocumentsResponse>> OnDocumentStatusChanged(WebhookRequest webhookRequest,
@@ -68,7 +68,7 @@ public class WebhookList : SmartcatInvocable
             var request = new SmartcatRequest(Urls.Api + "document/?documentId=" + documentId, Method.Get, Creds);
             var document = await Client.ExecuteWithHandling<DocumentDto>(request);
 
-            if(input.Status is null || document.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase))
+            if (input.Status is null || document.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase))
                 result.Add(document);
         }
 
@@ -78,6 +78,33 @@ public class WebhookList : SmartcatInvocable
                 HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK),
                 ReceivedWebhookRequestType = WebhookRequestType.Preflight
             };
+
+        return new WebhookResponse<ListDocumentsResponse>
+        {
+            HttpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK),
+            Result = new()
+            {
+                Documents = result
+            },
+            ReceivedWebhookRequestType = WebhookRequestType.Default,
+        };
+    }
+
+    [Webhook("On translation import completed", typeof(TranslationImportCompletedHandler),
+        Description = "Triggered when translation of the specific document completed")]
+    public async Task<WebhookResponse<ListDocumentsResponse>> OnTranslationImportCompleted(
+        WebhookRequest webhookRequest)
+    {
+        var documentIds = GetPayloadIds(webhookRequest);
+
+        var result = new List<DocumentDto>();
+        foreach (var documentId in documentIds)
+        {
+            var request = new SmartcatRequest(Urls.Api + "document/?documentId=" + documentId, Method.Get, Creds);
+            var document = await Client.ExecuteWithHandling<DocumentDto>(request);
+
+            result.Add(document);
+        }
 
         return new WebhookResponse<ListDocumentsResponse>
         {

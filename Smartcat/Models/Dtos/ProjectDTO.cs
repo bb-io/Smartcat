@@ -4,48 +4,48 @@ namespace Apps.Smartcat.Models.Dtos;
 
 public class ProjectDTO
 {
-    [Display("Project Id")]
+    [Display("Project ID")]
     public string Id { get; set; }
 
-    [Display("Account Id")]
+    [Display("Account ID")]
     public string accountId { get; set; }
 
-    [Display("Project Name")]
+    [Display("Project name")]
     public string name { get; set; }
 
-    [Display("Project Description")]
+    [Display("Project description")]
     public string description { get; set; }
 
     [Display("Deadline")]
     public DateTime? deadline { get; set; }
 
-    [Display("Creation Date")]
-    public DateTime? creationDate { get; set; }
+    [Display("Creation date")]
+    public DateTime creationDate { get; set; }
 
-    [Display("Created By User Id")]
+    [Display("Created by user ID")]
     public string createdByUserId { get; set; }
 
-    [Display("Created By User Email")]
+    [Display("Created by user email")]
     public string createdByUserEmail { get; set; }
 
-    [Display("Modification Date")]
+    [Display("Modification date")]
     public DateTime? modificationDate { get; set; }
 
-    [Display("Source Language Id")]
+    [Display("Source language ID")]
     public int sourceLanguageId { get; set; }
 
-    [Display("Source Language")]
+    [Display("Source language")]
     public string sourceLanguage { get; set; }
 
-    [Display("Target Languages")]
+    [Display("Target languages")]
     public List<string> targetLanguages { get; set; }
 
-    [Display("Project Status")]
+    [Display("Project status")]
     public string Status { get; set; }
 
-    [Display("Status Modification Date")]
-    public DateTime statusModificationDate { get; set; }
+    [Display("Status modification date")]
+    public DateTime? statusModificationDate { get; set; }
 
-    [Display("Client Id")]
+    [Display("Client ID")]
     public string? clientId { get; set; }
 }

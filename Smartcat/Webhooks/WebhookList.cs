@@ -90,8 +90,8 @@ public class WebhookList : SmartcatInvocable
         };
     }
 
-    [Webhook("On translation import completed", typeof(TranslationImportCompletedHandler),
-        Description = "Triggered when translation of the specific document completed")]
+    [Webhook("On translation XLIFF import completed", typeof(TranslationImportCompletedHandler),
+        Description = "Triggered when XLIFF translation of the specific document completed")]
     public async Task<WebhookResponse<ListDocumentsResponse>> OnTranslationImportCompleted(
         WebhookRequest webhookRequest)
     {

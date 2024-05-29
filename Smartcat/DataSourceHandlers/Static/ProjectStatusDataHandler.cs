@@ -8,7 +8,6 @@ public class ProjectStatusDataHandler : IStaticDataSourceHandler
     {
         return new()
         {
-            { "Created", "Created" },
             { "InProgress", "In progress" },
             { "Completed", "Completed" },
             { "Canceled", "Canceled" },

@@ -8,11 +8,9 @@ public class DocumentStatusDataHandler : IStaticDataSourceHandler
     {
         return new()
         {
-            { "Created", "Created" },
             { "InProgress", "In progress" },
             { "Completed", "Completed" },
             { "Updated", "Updated" },
-            { "TargetUpdated", "Target updated" },
         };
     }
 }

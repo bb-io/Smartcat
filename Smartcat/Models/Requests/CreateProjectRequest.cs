@@ -16,22 +16,22 @@ public class CreateProjectRequest
 
     public DateTime Deadline { get; set; }
 
-    [Display("Source Language")]
+    [Display("Source language")]
     public string SourceLanguage { get; set; }
 
-    [Display("Target Languages")]
+    [Display("Target languages")]
     public IEnumerable<string> TargetLanguages { get; set; }
 
     [Display("Client ID")]
     public string ClientId { get; set; }
 
-    [Display("Assign to Vendor?")]
+    [Display("Assign to vendor?")]
     public bool assignToVendor { get; set; }
 
-    [Display("is Test?")]
+    [Display("is test?")]
     public bool? isForTesting { get; set; }
 
-    [Display("External Tag")]
+    [Display("External tag")]
     public string? ExternalTag { get; set; }
 
     public string GetSerializedRequest()

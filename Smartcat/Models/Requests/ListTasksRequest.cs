@@ -7,6 +7,7 @@ namespace Apps.Smartcat.Models.Requests;
 public class ListTasksRequest
 {
     [Display("Project ID")]
+    [DataSource(typeof(ProjectDataHandler))]
     public string ProjectID { get; set; }
 
     [DataSource(typeof(CurrencyDataHandler))]

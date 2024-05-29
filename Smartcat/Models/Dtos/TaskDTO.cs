@@ -10,10 +10,10 @@ public class TaskDTO
     public string status { get; set; }
     public double progressPercentage { get; set; }
 
-    [Display("Source Language")]
+    [Display("Source language")]
     public string sourceLanguage { get; set; }
 
-    [Display("Target Language")]
+    [Display("Target language")]
     public string targetLanguage { get; set; }
     public string stageType { get; set; }
     public string stageId { get; set; }

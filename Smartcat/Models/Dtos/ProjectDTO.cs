@@ -17,10 +17,10 @@ public class ProjectDTO
     public string description { get; set; }
 
     [Display("Deadline")]
-    public DateTime deadline { get; set; }
+    public DateTime? deadline { get; set; }
 
     [Display("Creation Date")]
-    public DateTime creationDate { get; set; }
+    public DateTime? creationDate { get; set; }
 
     [Display("Created By User Id")]
     public string createdByUserId { get; set; }

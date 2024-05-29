@@ -23,6 +23,12 @@ public class SmartcatClient : RestClient
         if (response.IsSuccessStatusCode)
             return response;
 
+        if (response.StatusCode == System.Net.HttpStatusCode.Forbidden &&
+                response.Content.Contains("Project tasks are not available for the requested"))
+        {
+            throw new("There are no available tasks for the selected project.");
+        }
+
         throw new(response.Content);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Apps.Smartcat.Constants;
+﻿using System.Text.RegularExpressions;
+using Apps.Smartcat.Constants;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -6,6 +7,7 @@ namespace Apps.Smartcat.API;
 
 public class SmartcatClient : RestClient
 {
+    private const string ErrorRegextPattern = @"(?<=\\r\\n)(.+)$";
     public SmartcatClient() : base(new RestClientOptions { BaseUrl = new(Urls.Api) })
     {
     }
@@ -29,6 +31,7 @@ public class SmartcatClient : RestClient
             throw new("There are no available tasks for the selected project.");
         }
 
-        throw new(response.Content);
+        var errorMessage = Regex.Match(response.Content.Trim('"'), ErrorRegextPattern).Groups[0].Value;
+        throw new(string.IsNullOrWhiteSpace(errorMessage) ? response.Content : errorMessage);
     }
 }

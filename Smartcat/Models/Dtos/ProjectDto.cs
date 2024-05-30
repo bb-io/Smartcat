@@ -1,8 +1,8 @@
-﻿using Blackbird.Applications.Sdk.Common;
+using Blackbird.Applications.Sdk.Common;
 
 namespace Apps.Smartcat.Models.Dtos;
 
-public class ProjectDTO
+public class ProjectDto
 {
     [Display("Project ID")]
     public string Id { get; set; }
@@ -15,9 +15,6 @@ public class ProjectDTO
 
     [Display("Project description")]
     public string description { get; set; }
-
-    [Display("Deadline")]
-    public DateTime? deadline { get; set; }
 
     [Display("Creation date")]
     public DateTime creationDate { get; set; }

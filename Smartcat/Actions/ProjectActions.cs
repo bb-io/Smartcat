@@ -26,20 +26,20 @@ public class ProjectActions : SmartcatInvocable
     public async Task<ListProjectsResponse> ListAllProjects()
     {
         var request = new SmartcatRequest(Urls.Api + "project/list", Method.Get, Creds);
-        var response = await Client.ExecuteWithHandling<List<ProjectDTO>>(request);
+        var response = await Client.ExecuteWithHandling<List<FullProjectDTO>>(request);
         var projectsResponse = new ListProjectsResponse { Projects = response };
         return projectsResponse;
     }
 
     [Action("Get project", Description = "Get specific project")]
-    public async Task<ProjectDTO> GetProject([ActionParameter] GetProjectRequest input)
+    public async Task<FullProjectDTO> GetProject([ActionParameter] GetProjectRequest input)
     {
         var request = new SmartcatRequest(Urls.Api + "project/" + input.Project, Method.Get, Creds);
-        return await Client.ExecuteWithHandling<ProjectDTO>(request);
+        return await Client.ExecuteWithHandling<FullProjectDTO>(request);
     }
 
     [Action("Update project", Description = "Update project info")]
-    public async Task<ProjectDTO> UpdateProject([ActionParameter] UpdateProjectRequest input)
+    public async Task<FullProjectDTO> UpdateProject([ActionParameter] UpdateProjectRequest input)
     {
         var request = new SmartcatRequest(Urls.Api + "project/" + input.ProjectId, Method.Put, Creds);
         request.AddStringBody(input.GetSerializedRequest(InvocationContext), DataFormat.Json);
@@ -48,11 +48,11 @@ public class ProjectActions : SmartcatInvocable
     }
 
     [Action("Create project", Description = "Create a new project")]
-    public async Task<ProjectDTO> CreateProject([ActionParameter] CreateProjectRequest input)
+    public async Task<ProjectDto> CreateProject([ActionParameter] CreateProjectRequest input)
     {
         var request = new SmartcatRequest(Urls.Api + "project/create", Method.Post, Creds);
         request.AlwaysMultipartFormData = true;
         request.AddParameter("projectModel", input.GetSerializedRequest());
-        return await Client.ExecuteWithHandling<ProjectDTO>(request);
+        return await Client.ExecuteWithHandling<ProjectDto>(request);
     }
 }

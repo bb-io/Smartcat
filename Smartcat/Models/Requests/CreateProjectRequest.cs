@@ -17,9 +17,11 @@ public class CreateProjectRequest
     public DateTime Deadline { get; set; }
 
     [Display("Source language")]
+    [DataSource(typeof(LanguageDataHandler))]
     public string SourceLanguage { get; set; }
 
     [Display("Target languages")]
+    [DataSource(typeof(LanguageDataHandler))]
     public IEnumerable<string> TargetLanguages { get; set; }
 
     [Display("Client ID")]

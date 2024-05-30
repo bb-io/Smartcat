@@ -27,11 +27,11 @@ public class WebhookList : SmartcatInvocable
     {
         var projectIds = GetPayloadIds(webhookRequest);
 
-        var result = new List<ProjectDTO>();
+        var result = new List<FullProjectDTO>();
         foreach (var projectId in projectIds)
         {
             var request = new SmartcatRequest(Urls.Api + "project/" + projectId, Method.Get, Creds);
-            var project = await Client.ExecuteWithHandling<ProjectDTO>(request);
+            var project = await Client.ExecuteWithHandling<FullProjectDTO>(request);
 
             if (input.Status is null || project.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase))
                 result.Add(project);

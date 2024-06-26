@@ -2,14 +2,14 @@ using Blackbird.Applications.Sdk.Common.Dictionaries;
 
 namespace Apps.Smartcat.DataSourceHandlers.Static;
 
-public class DocumentStatusDataHandler : IStaticDataSourceHandler
+public class TargetSubstitutionModeStaticHandler : IStaticDataSourceHandler
 {
     public Dictionary<string, string> GetData()
     {
         return new()
         {
-            { "InProgress", "In progress" },
-            { "Completed", "Completed" },
+            ["All"] = "All",
+            ["None"] = "None",
         };
     }
 }

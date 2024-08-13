@@ -1,5 +1,6 @@
 ﻿using Apps.Smartcat.DataSourceHandlers;
 using Blackbird.Applications.Sdk.Common;
+using Blackbird.Applications.Sdk.Common.Dictionaries;
 using Blackbird.Applications.Sdk.Common.Dynamic;
 using Newtonsoft.Json;
 
@@ -17,11 +18,11 @@ public class CreateProjectRequest
     public DateTime Deadline { get; set; }
 
     [Display("Source language")]
-    [DataSource(typeof(LanguageDataHandler))]
+    [StaticDataSource(typeof(LanguageDataHandler))]
     public string SourceLanguage { get; set; }
 
     [Display("Target languages")]
-    [DataSource(typeof(LanguageDataHandler))]
+    [StaticDataSource(typeof(LanguageDataHandler))]
     public IEnumerable<string> TargetLanguages { get; set; }
 
     [Display("Client ID")]

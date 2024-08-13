@@ -40,7 +40,7 @@ public class UploadFileRequest
     public string? ConfirmMode { get; set; }
     
     [Display("Target languages")]
-    [DataSource(typeof(LanguageDataHandler))]
+    [StaticDataSource(typeof(LanguageDataHandler))]
     public List<string>? TargetLanguages { get; set; }
     
     [Display("Enable placeholders")]

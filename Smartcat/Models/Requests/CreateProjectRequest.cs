@@ -25,7 +25,7 @@ public class CreateProjectRequest
     public IEnumerable<string> TargetLanguages { get; set; }
 
     [Display("Client ID")]
-    public string ClientId { get; set; }
+    public string? ClientId { get; set; }
 
     [Display("Assign to vendor?")]
     public bool assignToVendor { get; set; }

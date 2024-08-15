@@ -1,18 +1,11 @@
-﻿using Blackbird.Applications.Sdk.Common.Dynamic;
-using Blackbird.Applications.Sdk.Common.Invocation;
-using Blackbird.Applications.Sdk.Common;
+﻿using Blackbird.Applications.Sdk.Common.Dictionaries;
+using System;
 
-namespace Apps.Smartcat.DataSourceHandlers;
+namespace Apps.Smartcat.DataSourceHandlers.Static;
 
-public class CurrencyDataHandler : BaseInvocable, IDataSourceHandler
+public class CurrencyDataHandler : IStaticDataSourceHandler
 {
-    public CurrencyDataHandler(InvocationContext invocationContext) : base(invocationContext)
-    {
-    }
-
-    public Dictionary<string, string> GetData(DataSourceContext context)
-    {
-        var currency = new List<string>
+    private static List<string> currency => new()
         {
             "AED",
             "ARS",
@@ -59,10 +52,9 @@ public class CurrencyDataHandler : BaseInvocable, IDataSourceHandler
 
         };
 
-        return currency
-            .Where(currency => context.SearchString == null || currency.Contains(context.SearchString,
-                StringComparison.OrdinalIgnoreCase))
-            .ToDictionary(currency => currency, currency => currency);
+    public Dictionary<string, string> GetData()
+    {
+        return currency.ToDictionary(currency => currency, currency => currency);
     }
 
 }

@@ -55,4 +55,24 @@ public class ProjectActions : SmartcatInvocable
         request.AddParameter("projectModel", input.GetSerializedRequest());
         return await Client.ExecuteWithHandling<ProjectDto>(request);
     }
+
+    [Action("Delete project", Description = "Deletes a specific project")]
+    public async Task DeleteProject([ActionParameter] GetProjectRequest input)
+    {
+        var request = new SmartcatRequest(Urls.Api + $"project/{input.Project}", Method.Delete, Creds);
+        
+        var result = await Client.ExecuteAsync(request);
+
+        return;
+    }
+
+    [Action("Get project statistics", Description = "Gets statistics for the specified project")]
+    public async Task<ProjectStatisticsResponse> GetProjectStatistics([ActionParameter] ProjectStatisticsRequest input)
+    {
+        var request = new SmartcatRequest($"https://smartcat.ai/api/integration/v2/project/{input.Project}/statistics", Method.Delete, Creds);
+        request.AddQueryParameter("onlyExactMatches", $"{input.onlyExactMatches ?? false}");
+        var response = await Client.ExecuteWithHandling<List<LanguageStatisticsDTO>>(request);
+
+        return new ProjectStatisticsResponse(response);
+    }
 }

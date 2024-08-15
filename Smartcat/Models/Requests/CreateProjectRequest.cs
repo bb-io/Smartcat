@@ -26,6 +26,7 @@ public class CreateProjectRequest
     public IEnumerable<string> TargetLanguages { get; set; }
 
     [Display("Client ID")]
+    [DataSource(typeof(ClientDataHandler))]
     public string? ClientId { get; set; }
 
     [Display("Assign to vendor?")]

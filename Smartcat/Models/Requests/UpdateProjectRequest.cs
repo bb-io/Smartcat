@@ -22,6 +22,7 @@ public class UpdateProjectRequest
     public DateTime? Deadline { get; set; }
 
     [Display("Client ID")]
+    [DataSource(typeof(ClientDataHandler))]
     public string? ClientId { get; set; }
 
     [Display("External Tag")]

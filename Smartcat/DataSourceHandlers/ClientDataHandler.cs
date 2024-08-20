@@ -1,9 +1,7 @@
-﻿using Apps.Smartcat.Actions;
-using Apps.Smartcat.API;
+﻿using Apps.Smartcat.API;
 using Apps.Smartcat.Constants;
 using Apps.Smartcat.Invocables;
 using Apps.Smartcat.Models.Dtos;
-using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Authentication;
 using Blackbird.Applications.Sdk.Common.Dynamic;
 using Blackbird.Applications.Sdk.Common.Invocation;

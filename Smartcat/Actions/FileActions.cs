@@ -11,6 +11,7 @@ using Blackbird.Applications.Sdk.Common.Invocation;
 using Blackbird.Applications.SDK.Extensions.FileManagement.Interfaces;
 using Blackbird.Applications.Sdk.Utils.Extensions.String;
 using RestSharp;
+using System.Text.RegularExpressions;
 
 namespace Apps.Smartcat.Actions;
 
@@ -53,17 +54,19 @@ public class FileActions : SmartcatInvocable
             response = await Client.ExecuteWithHandling(request);
         } while (response.StatusCode == HttpStatusCode.NoContent);
 
-        return new()
+        var filename = Regex.Match(response.ContentHeaders?.FirstOrDefault(x => x.Name == "Content-Disposition").Value.ToString(), "filename=\"?(.*?)\"?;").Groups[1].Value ?? document.DocumentId;
+
+        return new ()
         {
             File = await _fileManagementClient.UploadAsync(new MemoryStream(response.RawBytes),
                 response.ContentType ?? MediaTypeNames.Application.Octet,
-                $"{document.DocumentId}_{document.LanguageID}")
+                filename)
         };
     }
 
     private Task<ExportTaskResponse> GetExportTask(DocumentRequest document, DownloadFileRequest input)
     {
-        var endpoints = $"document/export?documentIds={document.DocumentId}_{document.LanguageID}".WithQuery(input);
+        var endpoints = $"document/export?documentIds={document.DocumentId}".WithQuery(input);
         var request = new SmartcatRequest(endpoints, Method.Post, Creds);
 
         return Client.ExecuteWithHandling<ExportTaskResponse>(request);

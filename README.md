@@ -17,6 +17,7 @@ Smartcat is a cloud-based translation and localization platform designed to stre
 - **Get project** Get specific project
 - **Get project statistics**  Gets statistics for the specified project
 - **List projects** List all projects in the account
+- **List files in a project** List all files in a project
 - **Update project**  Update project info
 
 ### Tasks

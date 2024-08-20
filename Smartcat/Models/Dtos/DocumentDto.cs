@@ -4,9 +4,10 @@ namespace Apps.Smartcat.Models.Dtos;
 
 public class DocumentDto
 {
-    [Display("Document ID")]
+    [Display("File ID")]
     public string Id { get; set; }
-    
+
+    [Display("File Name")]
     public string Name { get; set; }
     
     [Display("Full path")]

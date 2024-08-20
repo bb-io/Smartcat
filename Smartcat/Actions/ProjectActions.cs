@@ -9,6 +9,8 @@ using Apps.Smartcat.Models.Requests;
 using Apps.Smartcat.Constants;
 using Apps.Smartcat.Invocables;
 using Apps.Smartcat.API;
+using System.ComponentModel;
+using Newtonsoft.Json.Linq;
 
 namespace Apps.Smartcat.Actions;
 
@@ -36,6 +38,15 @@ public class ProjectActions : SmartcatInvocable
     {
         var request = new SmartcatRequest(Urls.Api + "project/" + input.Project, Method.Get, Creds);
         return await Client.ExecuteWithHandling<FullProjectDTO>(request);
+    }
+
+    [Action("List files in a project", Description = "List files in a project")]
+    public async Task<List<DocumentDto>> ListFilesInProject([ActionParameter] GetProjectRequest input)
+    {
+        var request = new SmartcatRequest(Urls.Api + "project/" + input.Project, Method.Get, Creds);
+        var response = await Client.ExecuteAsync(request);
+        var token = JObject.Parse(response.Content).SelectToken("documents");
+        return token?.ToObject<List<DocumentDto>>() ?? new List<DocumentDto>();
     }
 
     [Action("Update project", Description = "Update project info")]

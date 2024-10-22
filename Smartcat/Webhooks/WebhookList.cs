@@ -33,7 +33,10 @@ public class WebhookList : SmartcatInvocable
             var request = new SmartcatRequest(Urls.Api + "project/" + projectId, Method.Get, Creds);
             var project = await Client.ExecuteWithHandling<FullProjectDTO>(request);
 
-            if (input.Status is null || project.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase))
+            if ((input.Status is null || project.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase)) &&
+                (input.ProjectId is null || project.Id == input.ProjectId) &&
+                (input.ClientId is null || project.clientId == input.ClientId) &&
+                (input.AccountId is null || project.accountId == input.AccountId))
                 result.Add(project);
         }
 
@@ -68,7 +71,11 @@ public class WebhookList : SmartcatInvocable
             var request = new SmartcatRequest(Urls.Api + "document/?documentId=" + documentId, Method.Get, Creds);
             var document = await Client.ExecuteWithHandling<DocumentDto>(request);
 
-            if (input.Status is null || document.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase))
+            if ((input.Status is null || document.Status.Equals(input.Status, StringComparison.OrdinalIgnoreCase)) &&
+                (input.DocumentId is null || document.Id == input.DocumentId) &&
+                (input.ProjectId is null || document.ProjectId == input.ProjectId) &&
+                (input.SourceLanguage is null || document.SourceLanguage == input.SourceLanguage) &&
+                (input.TargetLanguage is null || document.TargetLanguage == input.TargetLanguage))
                 result.Add(document);
         }
 
@@ -93,7 +100,7 @@ public class WebhookList : SmartcatInvocable
     [Webhook("On translation XLIFF import completed", typeof(TranslationImportCompletedHandler),
         Description = "Triggered when XLIFF translation of the specific document completed")]
     public async Task<WebhookResponse<ListDocumentsResponse>> OnTranslationImportCompleted(
-        WebhookRequest webhookRequest)
+        WebhookRequest webhookRequest, [WebhookParameter] TranslationImportCompletedParameter input)
     {
         var documentIds = GetPayloadIds(webhookRequest);
 
@@ -103,7 +110,11 @@ public class WebhookList : SmartcatInvocable
             var request = new SmartcatRequest(Urls.Api + "document/?documentId=" + documentId, Method.Get, Creds);
             var document = await Client.ExecuteWithHandling<DocumentDto>(request);
 
-            result.Add(document);
+            if ((input.DocumentId is null || document.Id == input.DocumentId) &&
+                (input.ProjectId is null || document.ProjectId == input.ProjectId) &&
+                (input.SourceLanguage is null || document.SourceLanguage == input.SourceLanguage) &&
+                (input.TargetLanguage is null || document.TargetLanguage == input.TargetLanguage))
+                result.Add(document);
         }
 
         return new WebhookResponse<ListDocumentsResponse>
@@ -119,7 +130,7 @@ public class WebhookList : SmartcatInvocable
 
     private IEnumerable<string> GetPayloadIds(WebhookRequest webhookRequest)
     {
-        return JsonConvert.DeserializeObject<IEnumerable<string>>(webhookRequest.Body.ToString()) ??
+        return JsonConvert.DeserializeObject<IEnumerable<string>>(webhookRequest.Body.ToString()!) ??
                throw new Exception("No serializable payload was found in incoming request.");
     }
 }

@@ -36,6 +36,9 @@ Smartcat is a cloud-based translation and localization platform designed to stre
 - **On project status changed** Triggered when status of the specific project changed
 - **On translation XLIFF import completed** Triggered when XLIFF translation of the specific document completed
 
+## Translation memories
+- **Import TMX file to TM** Import a TMX file into translation memory
+
 ## Feedback
 
 Do you want to use this app or do you have feedback on our implementation? Reach out to us using the [established channels](https://www.blackbird.io/) or create an issue.

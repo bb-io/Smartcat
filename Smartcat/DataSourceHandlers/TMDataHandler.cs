@@ -32,7 +32,7 @@ namespace Apps.Smartcat.DataSourceHandlers
             };
 
             var queryString = string.Join("&", queryParameters.Select(p => $"{p.Key}={p.Value}"));
-            var url = $"{Urls.Api}/integration/v1/translationmemory?{queryString}";
+            var url = $"{Urls.Api}translationmemory?{queryString}";
 
             var request = new SmartcatRequest(url, Method.Get, Creds);
 

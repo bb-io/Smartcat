@@ -36,9 +36,9 @@ namespace Apps.Smartcat.DataSourceHandlers
 
             var request = new SmartcatRequest(url, Method.Get, Creds);
 
-            var tms = await Client.ExecuteWithHandling<ItemsDTO>(request);
+            var tms = await Client.ExecuteWithHandling<List<Item>>(request);
 
-            return tms.items.ToDictionary(x => x.id, x => x.name);
+            return tms.ToDictionary(x => x.id, x => x.name);
         }
     }
 }

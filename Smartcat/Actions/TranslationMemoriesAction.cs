@@ -8,6 +8,7 @@ using Apps.Smartcat.Constants;
 using Apps.Smartcat.Invocables;
 using Apps.Smartcat.Models.Requests;
 using Apps.Smartcat.Models.Responses;
+using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Actions;
 using Blackbird.Applications.Sdk.Common.Invocation;
 using Blackbird.Applications.SDK.Extensions.FileManagement.Interfaces;
@@ -27,7 +28,7 @@ namespace Apps.Smartcat.Actions
         }
 
         [Action("Import TMX to TM", Description = "Import a TMX file into translation memory")]
-        public async Task<ImportTmxResponse> ImportTmxToTm(ImportTmxRequest input)
+        public async Task<ImportTmxResponse> ImportTmxToTm([ActionParameter]ImportTmxRequest input)
         {
             var fileStream = await _fileManagementClient.DownloadAsync(input.TmxFile);
 

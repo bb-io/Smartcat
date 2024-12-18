@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Apps.Smartcat.API;
 using Apps.Smartcat.Constants;
@@ -69,9 +70,19 @@ namespace Apps.Smartcat.Actions
                 throw new Exception($"Error exception TMX file: {response.StatusCode} -{response.Content}- {response.ErrorMessage}");
             }
 
-            var fileName = $"Term_memory_{input.TmId}.tmx";
+            var filename = Regex.Match(
+         response.ContentHeaders?.FirstOrDefault(x => x.Name == "Content-Disposition")?.Value.ToString() ?? "",
+         "filename=\"?(.*?)\"?;"
+     ).Groups[1].Value;
 
-            var file = await _fileManagementClient.UploadAsync(new MemoryStream(response.RawBytes), "application/octet-stream",fileName);
+            if (string.IsNullOrEmpty(filename))
+                throw new Exception("Failed to retrieve file name from server response.");
+
+            var file = await _fileManagementClient.UploadAsync(
+        new MemoryStream(response.RawBytes),
+        response.ContentType ?? "application/octet-stream",
+        filename
+    );
 
             return new FileResponse
             {

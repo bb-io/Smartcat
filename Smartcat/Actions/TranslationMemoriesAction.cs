@@ -10,6 +10,7 @@ using Apps.Smartcat.Models.Requests;
 using Apps.Smartcat.Models.Responses;
 using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Actions;
+using Blackbird.Applications.Sdk.Common.Files;
 using Blackbird.Applications.Sdk.Common.Invocation;
 using Blackbird.Applications.SDK.Extensions.FileManagement.Interfaces;
 using RestSharp;
@@ -57,9 +58,25 @@ namespace Apps.Smartcat.Actions
 
 
         [Action("Export TMX from TM", Description = "Export a TMX from translation memory")]
-        public async Task<> ExportTmxFromTm([ActionParameter] )
+        public async Task<FileResponse> ExportTmxFromTm([ActionParameter] ExportTmxRequest input)
         {
+            var url = $"{Urls.Api}translationmemory/{input.TmId}/file?exportMode={input.ExportMode}&withTags={input.WithTags.ToString()}";
 
+            var request = new SmartcatRequest(url,Method.Get,Creds);
+            var response = await Client.ExecuteWithHandling(request);
+            if (!response.IsSuccessful || response.RawBytes ==null)
+            {
+                throw new Exception($"Error exception TMX file: {response.StatusCode} -{response.Content}- {response.ErrorMessage}");
+            }
+
+            var fileName = $"Term_memory_{input.TmId}.tmx";
+
+            var file = await _fileManagementClient.UploadAsync(new MemoryStream(response.RawBytes), "application/octet-stream",fileName);
+
+            return new FileResponse
+            {
+                File = file
+            };
         }
     }
 }

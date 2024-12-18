@@ -14,10 +14,6 @@ namespace Apps.Smartcat.Polling.Models
         [Display("Projects")]
         public List<ProjectResponse> Projects { get; set; }
 
-        public ProjectListResponse(List<ProjectResponse> projects)
-        {
-            Projects = projects;
-        }
     }
     public class ProjectResponse
     {

@@ -19,7 +19,7 @@ namespace Apps.Smartcat.Polling
         public ProjectPollingList(InvocationContext invocationContext):base(invocationContext) { }
 
         [PollingEvent("On project created", "Triggered when a new project was created")]
-        public async Task<PollingEventResponse<ProjectMemory, ProjectResponse>> OnProjectCreated(
+        public async Task<PollingEventResponse<ProjectMemory, ProjectListResponse>> OnProjectCreated(
             PollingEventRequest<ProjectMemory> request)
         {
             if(request.Memory is null)
@@ -38,7 +38,8 @@ namespace Apps.Smartcat.Polling
             var getProjectRequest = new SmartcatRequest(Urls.Api + "project/list", RestSharp.Method.Get, Creds);
             var response = await Client.ExecuteWithHandling<List<ProjectResponse>>(getProjectRequest);
 
-            var newProjects = response.Where(p => p.CreationDate > request.Memory.LastPollingTime).ToList();
+            var newProjects = response
+                .Where(p => p.CreationDate > request.Memory.LastPollingTime).OrderByDescending(p => p.CreationDate).ToList();
 
             if (newProjects.Any())
             {
@@ -49,6 +50,10 @@ namespace Apps.Smartcat.Polling
                     {
                         LastPollingTime = DateTime.UtcNow,
                         Triggered = true
+                    },
+                    Result = new ProjectListResponse
+                    {
+                        Projects = newProjects
                     }
                 };
             }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Apps.Smartcat.DataSourceHandlers;
 using Apps.Smartcat.DataSourceHandlers.Static;
 using Blackbird.Applications.Sdk.Common;
+using Blackbird.Applications.Sdk.Common.Dictionaries;
 using Blackbird.Applications.Sdk.Common.Dynamic;
 
 namespace Apps.Smartcat.Models.Requests
@@ -17,11 +18,11 @@ namespace Apps.Smartcat.Models.Requests
         public string TmId { get; set; }
 
         [Display("Export mode")]
-        [DataSource(typeof(ExportModeDataHandler))]
+        [StaticDataSource(typeof(ExportModeDataHandler))]
         public string ExportMode {  get; set; }
 
         [Display("With tags")]
-        [DataSource(typeof(YesNoDataHandler))]
+        [StaticDataSource(typeof(YesNoDataHandler))]
         public bool WithTags {  get; set; }
     }
 }

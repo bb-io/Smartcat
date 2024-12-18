@@ -54,5 +54,12 @@ namespace Apps.Smartcat.Actions
                 Message = "TMX file successfully imported into the translation memory."
             };
         }
+
+
+        [Action("Export TMX from TM", Description = "Export a TMX from translation memory")]
+        public async Task<> ExportTmxFromTm([ActionParameter] )
+        {
+
+        }
     }
 }

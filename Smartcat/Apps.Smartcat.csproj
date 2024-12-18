@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<Product>Smartcat</Product>
-	<Version>1.0.3</Version>
+	<Version>1.0.4</Version>
 	<Description>Cloud-based platform for efficient translation and localization management.</Description>
 	<AssemblyName>Apps.Smartcat</AssemblyName>
   </PropertyGroup>

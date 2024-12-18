@@ -38,6 +38,7 @@ Smartcat is a cloud-based translation and localization platform designed to stre
 
 ## Translation memories
 - **Import TMX file to TM** Import a TMX file into translation memory
+- **Export TMX from TM** Export a TMX from translation memory
 
 ## Feedback
 

@@ -64,6 +64,20 @@ public class FileActions : SmartcatInvocable
         };
     }
 
+    [Action("Update file from XLIFF", Description = "Update file from translated XLIFF")]
+    public async Task UpdateFileFromXLIFF([ActionParameter] UploadXLIFFRequest input)
+    {
+        var fileStream = await _fileManagementClient.DownloadAsync(input.File);
+        var request = new SmartcatRequest(Urls.Api + $"document/translateWithXliff", Method.Put,
+            Creds);
+        request.AlwaysMultipartFormData = true;
+        request.AddFile("file", () => fileStream, input.File.Name);
+        request.AddParameter("documentId", input.DocumentID);
+        request.AddParameter("confirmTranslation", input.ConfirmSegments ?? false);
+        request.AddParameter("overwriteUpdatedSegments", input.Overwrite ?? false);
+        await Client.ExecuteAsync(request);
+    }
+
     private Task<ExportTaskResponse> GetExportTask(DocumentRequest document, DownloadFileRequest input)
     {
         var endpoints = $"document/export?documentIds={document.DocumentId}".WithQuery(input);

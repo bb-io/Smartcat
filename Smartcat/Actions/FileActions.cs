@@ -70,7 +70,9 @@ public class FileActions : SmartcatInvocable
         var fileStream = await _fileManagementClient.DownloadAsync(input.File);
         var request = new SmartcatRequest(Urls.Api + $"document/translateWithXliff", Method.Put,
             Creds);
+        request.AddHeader("accept", "*/*");
         request.AddHeader("Content-Type", "application/json-patch+json");
+        request.AlwaysMultipartFormData = true;
         request.AddFile("file", () => fileStream, input.File.Name);
         request.AddParameter("documentId", input.DocumentID);
         request.AddParameter("confirmTranslation", input.ConfirmSegments ?? false);

@@ -68,15 +68,10 @@ public class FileActions : SmartcatInvocable
     public async Task UpdateFileFromXLIFF([ActionParameter] UploadXLIFFRequest input)
     {
         var fileStream = await _fileManagementClient.DownloadAsync(input.File);
-        var request = new SmartcatRequest("https://smartcat.com/api/integration/v1/document/translateWithXliff", Method.Put,
-            Creds);
-        request.AddHeader("accept", "*/*");
-        request.AddHeader("Content-Type", "application/json-patch+json");
+        var request = new SmartcatRequest(Urls.Api + $"/document/translateWithXliff?documentId={input.DocumentID}&overwriteUpdatedSegments={input.Overwrite ?? false}&confirmTranslation{input.ConfirmSegments ?? false}"
+            , Method.Put, Creds);
         request.AlwaysMultipartFormData = true;
         request.AddFile("file", () => fileStream, input.File.Name);
-        request.AddParameter("documentId", input.DocumentID);
-        request.AddParameter("confirmTranslation", input.ConfirmSegments ?? false);
-        request.AddParameter("overwriteUpdatedSegments", input.Overwrite ?? false);
        var response =  await Client.ExecuteAsync(request);
     }
 

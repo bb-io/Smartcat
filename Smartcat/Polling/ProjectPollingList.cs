@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using Apps.Smartcat.API;
+﻿using Apps.Smartcat.API;
 using Apps.Smartcat.Constants;
 using Apps.Smartcat.Invocables;
 using Apps.Smartcat.Polling.Models;
+using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Invocation;
 using Blackbird.Applications.Sdk.Common.Polling;
 
@@ -20,7 +15,8 @@ namespace Apps.Smartcat.Polling
 
         [PollingEvent("On project created", "Triggered when a new project was created")]
         public async Task<PollingEventResponse<ProjectMemory, ProjectListResponse>> OnProjectCreated(
-            PollingEventRequest<ProjectMemory> request)
+            PollingEventRequest<ProjectMemory> request, 
+            [PollingEventParameter][Display("Project name contains")] string? projectNameContains)
         {
             if(request.Memory is null)
         {
@@ -43,6 +39,39 @@ namespace Apps.Smartcat.Polling
 
             if (newProjects.Any())
             {
+
+                if (!String.IsNullOrEmpty(projectNameContains))
+                {
+                    if (newProjects.Any(x => x.Name.Contains(projectNameContains)))
+                    {
+                        return new()
+                        {
+                            FlyBird = true,
+                            Memory = new ProjectMemory
+                            {
+                                LastPollingTime = DateTime.UtcNow,
+                                Triggered = true
+                            },
+                            Result = new ProjectListResponse
+                            {
+                                Projects = newProjects.Where(x => x.Name.Contains(projectNameContains)).ToList()
+                            }
+                        };
+                    }
+                    else
+                    {
+                        return new()
+                        {
+                            FlyBird = false,
+                            Memory = new ProjectMemory
+                            {
+                                LastPollingTime = DateTime.UtcNow,
+                                Triggered = false
+                            }
+                        };
+                    }
+                }
+
                 return new()
                 {
                     FlyBird = true,

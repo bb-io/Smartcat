@@ -4,6 +4,8 @@ using Blackbird.Applications.Sdk.Common.Dynamic;
 using Apps.Smartcat.Actions;
 using Newtonsoft.Json;
 using Blackbird.Applications.Sdk.Common.Invocation;
+using Blackbird.Applications.Sdk.Common.Dictionaries;
+using Apps.Smartcat.DataSourceHandlers.Static;
 
 namespace Apps.Smartcat.Models.Requests;
 
@@ -18,6 +20,10 @@ public class UpdateProjectRequest
     public string? Name { get; set; }
 
     public string? Description { get; set; }
+
+    [StaticDataSource(typeof(WorkflowStageStaticHandler))]
+    [Display("Workflow stage")]
+    public IEnumerable<string>? WorkflowStages { get; set; }
 
     public DateTime? Deadline { get; set; }
 
@@ -40,8 +46,9 @@ public class UpdateProjectRequest
                 description = Description,
                 deadline = Deadline.HasValue? Deadline.Value.ToString("yyyy-MM-ddTHH:mm:ss.000Z") : null,
                 clientId = ClientId,
-                externalTag = ExternalTag
-            }
+                externalTag = ExternalTag,
+                workflowStages = WorkflowStages,
+        }
             , new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
     }
 

@@ -12,7 +12,7 @@ namespace Apps.Smartcat.Polling.Models
     public class ProjectListResponse
     {
         [Display("Projects")]
-        public List<ProjectResponse> Projects { get; set; }
+        public List<ProjectResponse>? Projects { get; set; }
 
     }
     public class ProjectResponse

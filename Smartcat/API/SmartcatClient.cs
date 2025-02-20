@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Apps.Smartcat.Constants;
+using Blackbird.Applications.Sdk.Common.Exceptions;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -28,10 +29,10 @@ public class SmartcatClient : RestClient
         if (response.StatusCode == System.Net.HttpStatusCode.Forbidden &&
                 response.Content.Contains("Project tasks are not available for the requested"))
         {
-            throw new("There are no available tasks for the selected project.");
+            throw new PluginApplicationException("There are no available tasks for the selected project.");
         }
 
         var errorMessage = Regex.Match(response.Content.Trim('"'), ErrorRegextPattern).Groups[0].Value;
-        throw new(string.IsNullOrWhiteSpace(errorMessage) ? response.Content : errorMessage);
+        throw new PluginApplicationException(string.IsNullOrWhiteSpace(errorMessage) ? response.Content : errorMessage);
     }
 }

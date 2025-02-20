@@ -77,6 +77,23 @@ public class ProjectActions : SmartcatInvocable
         return;
     }
 
+    [Action("Complete workflow for all documents", Description = "Completes the workflow for all project documents, changing the project status to Completed")]
+    public async Task CompleteWorkflowForDocumentsProject([ActionParameter] GetProjectRequest input)
+    {
+        var request = new SmartcatRequest($"{Urls.Api}project/complete?projectId={input.Project}", Method.Post, Creds);
+        await Client.ExecuteWithHandling(request);
+        return;
+    }
+
+    [Action("Set document as completed", Description = "Change the document status to Completed")]
+    public async Task SetDocumentAsCompleted([ActionParameter] CompleteDocumentRequest input)
+    {
+        var request = new SmartcatRequest($"{Urls.Api}document/complete?documentId={input.DocumentId}",Method.Post,Creds);
+        await Client.ExecuteWithHandling(request);
+        return;
+    }
+
+
     [Action("Get project statistics", Description = "Get statistics for the specified project")]
     public async Task<ProjectStatisticsResponse> GetProjectStatistics([ActionParameter] ProjectStatisticsRequest input)
     {

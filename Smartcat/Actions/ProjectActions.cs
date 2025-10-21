@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Apps.Smartcat.Actions;
 
-[ActionList]
+[ActionList("Projects")]
 public class ProjectActions : SmartcatInvocable
 {
     private AuthenticationCredentialsProvider[] Creds =>

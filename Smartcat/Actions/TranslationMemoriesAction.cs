@@ -18,7 +18,7 @@ using RestSharp;
 
 namespace Apps.Smartcat.Actions
 {
-    [ActionList]
+    [ActionList("Translation memory")]
     public class TranslationMemoriesAction : SmartcatInvocable
     {
         private readonly IFileManagementClient _fileManagementClient;

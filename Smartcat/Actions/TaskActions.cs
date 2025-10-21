@@ -12,7 +12,7 @@ using RestSharp;
 
 namespace Apps.Smartcat.Actions;
 
-[ActionList]
+[ActionList("Tasks")]
 public class TaskActions : SmartcatInvocable
 {
     private AuthenticationCredentialsProvider[] Creds =>

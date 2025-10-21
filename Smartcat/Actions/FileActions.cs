@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 
 namespace Apps.Smartcat.Actions;
 
-[ActionList]
+[ActionList("Files")]
 public class FileActions : SmartcatInvocable
 {
     private readonly IFileManagementClient _fileManagementClient;

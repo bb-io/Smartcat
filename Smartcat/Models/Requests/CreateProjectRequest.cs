@@ -43,7 +43,7 @@ public class CreateProjectRequest
     [StaticDataSource(typeof(WorkflowStageStaticHandler))]
     public IEnumerable<string>? WorkflowStages { get; set; }
 
-    [Display("Translation memory IDs (apply to all targets)")]
+    [Display("Translation memory IDs")]
     [DataSource(typeof(TMDataHandler))]
     public IEnumerable<string>? TranslationMemoryIds { get; set; }
 

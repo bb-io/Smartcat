@@ -6,7 +6,7 @@ using RestSharp;
 
 namespace Apps.Smartcat.Connections;
 
-internal class ConnectionValidator : IConnectionValidator
+public class ConnectionValidator : IConnectionValidator
 {
     public async ValueTask<ConnectionValidationResponse> ValidateConnection(IEnumerable<AuthenticationCredentialsProvider> authProviders, CancellationToken cancellationToken)
     {

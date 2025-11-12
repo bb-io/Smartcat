@@ -1,4 +1,5 @@
 ﻿using Apps.Smartcat.DataSourceHandlers;
+using Apps.Smartcat.DataSourceHandlers.Static;
 using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Dictionaries;
 using Blackbird.Applications.Sdk.Common.Dynamic;
@@ -38,6 +39,14 @@ public class CreateProjectRequest
     [Display("External tag")]
     public string? ExternalTag { get; set; }
 
+    [Display("Workflow stages")]
+    [StaticDataSource(typeof(WorkflowStageStaticHandler))]
+    public IEnumerable<string>? WorkflowStages { get; set; }
+
+    [Display("Translation memory IDs (apply to all targets)")]
+    [DataSource(typeof(TMDataHandler))]
+    public IEnumerable<string>? TranslationMemoryIds { get; set; }
+
     public string GetSerializedRequest()
     {
         return JsonConvert.SerializeObject( new
@@ -51,9 +60,10 @@ public class CreateProjectRequest
                 assignToVendor = assignToVendor,
                 isForTesting = isForTesting,
                 sourceLanguage = SourceLanguage,
-                targetLanguages = TargetLanguages.Select(t => t).ToArray()
+                targetLanguages = TargetLanguages.Select(t => t).ToArray(),
+                workflowStages = WorkflowStages?.ToArray()
 
-            } 
+        } 
             , new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
     }
 }

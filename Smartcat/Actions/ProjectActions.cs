@@ -61,10 +61,32 @@ public class ProjectActions : SmartcatInvocable
     [Action("Create project", Description = "Create a new project")]
     public async Task<ProjectDto> CreateProject([ActionParameter] CreateProjectRequest input)
     {
-        var request = new SmartcatRequest(Urls.Api + "project/create", Method.Post, Creds);
-        request.AlwaysMultipartFormData = true;
-        request.AddParameter("projectModel", input.GetSerializedRequest());
-        return await Client.ExecuteWithHandling<ProjectDto>(request);
+        var create = new SmartcatRequest(Urls.Api + "project/create", Method.Post, Creds)
+        {
+            AlwaysMultipartFormData = true
+        };
+        create.AddParameter("projectModel", input.GetSerializedRequest());
+
+        var project = await Client.ExecuteWithHandling<ProjectDto>(create);
+
+        if (input.TranslationMemoryIds is { } tmIds && tmIds.Any())
+        {
+            var tmModels = tmIds.Select(id => new
+            {
+                id,
+                isWritable = true,
+                matchThreshold = 100
+            }).ToArray();
+
+            var setTmsReq = new SmartcatRequest(
+                Urls.Api + $"project/{project.Id}/translationmemories",
+                Method.Post, Creds);
+
+            setTmsReq.AddJsonBody(tmModels);
+            await Client.ExecuteWithHandling<object>(setTmsReq);
+        }
+
+        return project;
     }
 
     [Action("Delete project", Description = "Delete a specific project")]

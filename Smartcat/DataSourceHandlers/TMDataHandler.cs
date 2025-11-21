@@ -31,6 +31,9 @@ namespace Apps.Smartcat.DataSourceHandlers
                  { "batchSize", "20" }
             };
 
+            if (!string.IsNullOrEmpty(context.SearchString))
+                queryParameters.Add("searchName", context.SearchString);
+
             var queryString = string.Join("&", queryParameters.Select(p => $"{p.Key}={p.Value}"));
             var url = $"{Urls.Api}translationmemory?{queryString}";
 
